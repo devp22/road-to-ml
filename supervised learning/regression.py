@@ -3,7 +3,7 @@ import numpy as np
 import sklearn
 import matplotlib.pyplot as plt
 import kagglehub
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression,Lasso
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 # Linear regression is a statistical method that is used to predict a continuous dependent variable i.e target variable based on one or more independent variables. This technique assumes a linear relationship between the dependent and independent variables which means the dependent variable changes proportionally with changes in the independent variables.
@@ -54,14 +54,18 @@ X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.25,random_st
 model = LinearRegression()
 model.fit(X_train,y_train)
 y_pred = model.predict(X_test)
-# plt.scatter(X_test,y_test,c='Red')
-# plt.plot(X_test,y_pred,c='Blue')
-# plt.show()
 score = model.score(X_test,y_test)
-print("score = ",score)
 mae = mean_absolute_error(y_true=y_test,y_pred=y_pred) 
 mse = mean_squared_error(y_true=y_test,y_pred=y_pred) #default=True 
 rmse = mean_squared_error(y_true=y_test,y_pred=y_pred,squared=False) 
+print("--------before regularization------------")
+print("score = ",score)
 print("MAE:",mae) 
 print("MSE:",mse) 
-print("RMSE:",rmse)
+print("RMSE:",rmse) 
+print("--------after regularization------------")
+lasso = Lasso(alpha=0.5)
+lasso.fit(X_train,y_train)
+y_pred = lasso.predict(X_test)
+mse = mean_squared_error(y_test,y_pred)
+print("MSE:",mse) 
