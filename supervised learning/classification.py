@@ -6,6 +6,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
 
 # df = pd.read_csv('datasets/insurance.csv')
 # df["sex"] = [0 if i == "male" else 1 for i in df["sex"]]
@@ -59,6 +60,25 @@ from sklearn.ensemble import RandomForestClassifier
 
 
 # ---------------------------RANDOM FOREST---------------------------
+# df = pd.read_csv('datasets/titanic.csv')
+# df.drop(['Name','Ticket','Fare','Cabin'],axis=1,inplace=True)
+# labelEncoder = LabelEncoder()
+# labels = labelEncoder.fit_transform(df['Sex'])
+# df['Sex'] = labels
+# labels = labelEncoder.fit_transform(df['Embarked'])
+# df['Embarked'] = labels
+# df.fillna(df.mean(),inplace=True)
+# df.drop('PassengerId',axis=1,inplace=True)
+# y = df['Pclass']
+# X = df.drop('Pclass',axis=1)
+# X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.1,random_state=90)
+# rfc = RandomForestClassifier(n_estimators=4,max_depth=4,min_samples_split=5,random_state=90)
+# rfc.fit(X=X_train,y=y_train)
+# y_pred = rfc.predict(X=X_test)
+# score = accuracy_score(y_pred=y_pred,y_true=y_test)
+# print(f"Accuracy score: {score*100}%.")
+
+# ---------------------------SVM---------------------------
 df = pd.read_csv('datasets/titanic.csv')
 df.drop(['Name','Ticket','Fare','Cabin'],axis=1,inplace=True)
 labelEncoder = LabelEncoder()
@@ -71,8 +91,8 @@ df.drop('PassengerId',axis=1,inplace=True)
 y = df['Pclass']
 X = df.drop('Pclass',axis=1)
 X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.1,random_state=90)
-rfc = RandomForestClassifier(n_estimators=4,max_depth=4,min_samples_split=5,random_state=90)
-rfc.fit(X=X_train,y=y_train)
-y_pred = rfc.predict(X=X_test)
+svm = SVC(C=2.0,kernel='poly',degree=3,coef0=2,random_state=90)
+svm.fit(X=X_train,y=y_train)
+y_pred = svm.predict(X=X_test)
 score = accuracy_score(y_pred=y_pred,y_true=y_test)
 print(f"Accuracy score: {score*100}%.")
