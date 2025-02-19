@@ -64,7 +64,10 @@ tsne = TSNE(n_components=2, random_state=42)
 X_train_tsne = tsne.fit_transform(X_train_scaled)
 
 dbscan = DBSCAN(eps=0.7,min_samples=6,metric='euclidean')
-clusters = dbscan.fit_predict(X_train_scaled)
+clusters = dbscan.fit_pre
+
+
+dict(X_train_scaled)
 sns.set_style('whitegrid')
 sns.scatterplot(x=X_train_tsne[:, 0], y=X_train_tsne[:, 1], hue=clusters, palette='tab10', s=60)
 plt.show()
